@@ -5,11 +5,12 @@ import ImagePicker, { ImagePickerResponse } from 'react-native-image-picker';
 
 interface Props {
 
-    top?:string,
-    left?:string,
-    rigth?:string,
-    bottom?:string,
+    top?:string;
+    left?:string;
+    rigth?:string;
+    bottom?:string;
     
+    size:number;
 }
 
 const AvatarPicturePicker:React.FunctionComponent<Props> = (props:Props) => {
@@ -32,17 +33,17 @@ const AvatarPicturePicker:React.FunctionComponent<Props> = (props:Props) => {
     };
 
     return (
-        <View style={{width: size, height: size,  
+        <View style={{width: props.size, height: props.size,  
                         top:props.top ? props.top : 0, bottom:props.bottom ? props.bottom : 0,
                         left:props.left ? props.left : 0, right:props.rigth ? props.rigth : 0}}>
             <Image
-                style={{ width: size, height: size, borderRadius: radius}} 
+                style={{ width: props.size, height: props.size, borderRadius: radius}} 
                 source={{ uri : avatarPicture
                 ? avatarPicture.uri
                 : 'https://fr.imoconsultores.pt/Assets/Images/avatar-placeholder.jpg'}}
             />
             <TouchableOpacity
-                style={{ ...styles.containBtn, width: size, height: size, borderRadius: radius}} 
+                style={{ ...styles.containBtn, width: props.size, height: props.size, borderRadius: radius}} 
                 onPress={() => ImagePicker.showImagePicker({}, ImagePickerCallBack)}
                 >
 

@@ -43,7 +43,7 @@ const ProRegistrationForm:React.FunctionComponent = (props:Props) => {
         <View>
             <ScrollView>
             <Text style={styles.title}>New Account</Text>
-            <AvatarPicturePicker top={'3%'} left={'25%'}/>
+            <AvatarPicturePicker top={'3%'} left={'25%'} size={200}/>
             <TextInput  style={styles.userName} 
                         placeholder={'UserName'}></TextInput>
 
@@ -60,8 +60,15 @@ const ProRegistrationForm:React.FunctionComponent = (props:Props) => {
                         <Text style={{fontSize: 17}}>Date Of Birth</Text>
                         <DatePicker  left={'60%'} top={'1.5%'}/>
                     </View>
+                    
                     <TextInput  style={{...styles.textInput, width: '50%', marginTop:'1%'}}
                                 placeholder={'Tel'}></TextInput>
+                </View>
+                <View style={{flexDirection: 'row', justifyContent: 'space-evenly', marginTop: '2%'}}>
+                    <TextInput  style={{...styles.textInput, width: '40%'}} 
+                                placeholder={'Country'}></TextInput>
+                    <TextInput  style={{...styles.textInput, width: '40%'}} 
+                                placeholder={'City'}></TextInput>
                 </View>
                 <View style={{flexDirection: 'row', justifyContent: 'space-evenly', marginVertical: '2%'}}>
                         <TextInput  style={{...styles.textInput, width: '40%'}} 
@@ -110,7 +117,7 @@ const styles = StyleSheet.create({
     },
 
     professionContainer: {
-        marginTop: '8%'
+        marginTop: '5%'
     },
 
     btn: {
