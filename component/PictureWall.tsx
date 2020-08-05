@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Image, TouchableOpacity, FlatList, Modal } from 'react-native';
+import { useSelector } from 'react-redux';
+import { GlobalState } from '../Redux/Store/store';
 
-import { pictureData } from './Types';
+import {PictureData} from './Types';
 
 interface Props {
     width:number|string;
@@ -14,17 +16,17 @@ interface Props {
 
 const PictureWall:React.FunctionComponent<Props> = (props:Props) => {
                                
-    const defaultDataPicture:pictureData = { uri: '',
+    const defaultDataPicture:PictureData = { uri: '',
                                              key: Math.random().toString(),
                                              width: 0,
                                              height: 0,
                                              spaceTakenInRow: 1};
 
-    const [imageList, setImageList] = useState<pictureData[]>([]);
+    const pictureWall = useSelector( (store:GlobalState) => store.picturesOnTheWall)
     const [isVisible, setIsVisible] = useState<boolean>(false);
-    const [pictureToDisplay, setPictureToDisplay] = useState<pictureData>(defaultDataPicture);
+    const [pictureToDisplay, setPictureToDisplay] = useState<PictureData>(defaultDataPicture);
 
-    const displayPicture = (newPictureData:pictureData) => {
+    const displayPicture = (newPictureData:PictureData) => {
         
         if (isVisible)
             setIsVisible(false);
@@ -41,12 +43,12 @@ const PictureWall:React.FunctionComponent<Props> = (props:Props) => {
                            left: props.left ? props.left : 0, right: props.right ? props.right : 0,
                            top: props.top ? props.top : 0, bottom: props.bottom ? props.bottom : 0,
                            position:'absolute', borderColor: 'red', borderWidth: 2}}>
-                <FlatList data={imageList} 
+                <FlatList data={pictureWall} 
                           numColumns={3}
                           renderItem={({item}) => (
-                            <TouchableOpacity style={{...styles.pictureContainer, flex: item.spaceTakenInRow}} 
-                                              onPress={() => displayPicture(item)}>
-                                <Image style={styles.picture} source={{ uri : item.uri}}/>
+                            <TouchableOpacity style={{...styles.pictureContainer, flex: item.image.spaceTakenInRow}} 
+                                              onPress={() => displayPicture(item.image)}>
+                                <Image style={styles.picture} source={{ uri : item.image.uri}}/>
                             </TouchableOpacity>)}>   
                 </FlatList>
             </View>

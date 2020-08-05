@@ -6,8 +6,6 @@ import {Provider} from 'react-redux';
 
 import store from './Redux/Store/store';
 
-console.log(store.getState());
-
 const RNRedux = () => (
     <Provider store = { store }>
       <App />

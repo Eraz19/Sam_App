@@ -1,18 +1,20 @@
-import { PictureData } from '../../component/Types';
 import { Action, ActionData_AddPicture, ActionType } from '../Action/actionTypes';
+import { GlobalState } from '../Store/store';
 
-let initPicWall:ActionData_AddPicture[] = [];
-
-export default function picWallUpdater(state = initPicWall, action:Action<ActionData_AddPicture>) 
+export default function picWallUpdater(store:GlobalState, action:Action<ActionData_AddPicture>)
 {
-    let nextState:ActionData_AddPicture[] ;
+    let nextStoreState;
 
     switch (action.type)
     {
         case (ActionType.ADD_PICTURE_TO_WALL):
-            nextState = [...state, action.data];
-            return (nextState);
+            let newPictureWallList = [...store.picturesOnTheWall, action.data];
+            let cpyCurrentGlobalState = {...store};
+
+            cpyCurrentGlobalState.picturesOnTheWall = newPictureWallList;
+            nextStoreState = cpyCurrentGlobalState;
+            return (nextStoreState);
         default:
-            return (state);
+            return (store);
     }
 }

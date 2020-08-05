@@ -1,8 +1,9 @@
 import React, { } from 'react';
 import { TouchableOpacity, View, Button } from 'react-native';
 import ImagePicker, { ImagePickerResponse, ImagePickerOptions } from 'react-native-image-picker';
-import store from '../Redux/Store/store';
+import { useDispatch, useSelector } from 'react-redux';
 
+import store , { GlobalState } from '../Redux/Store/store';
 import { PictureData } from './Types';
 import { addPictureToWall } from '../Redux/Action/action';
 import { ActionData_AddPicture } from '../Redux/Action/actionTypes';
@@ -28,6 +29,8 @@ const PicturePicker:React.FunctionComponent<Props> = (props:Props) => {
 
     const imagePickerOption:ImagePickerOptions = { mediaType: 'mixed',
                                                    noData: true};
+
+    const dispatch = useDispatch();
 
     const spaceTakenByImageInRow = ():number => {
 
@@ -57,14 +60,10 @@ const PicturePicker:React.FunctionComponent<Props> = (props:Props) => {
                                              width: data.width,
                                              height: data.height,
                                              spaceTakenInRow: spaceTakenByImageInRow()};
-        console.log(tempPictureData);
 
         const dataToUpdatePictureWall:ActionData_AddPicture = {image: tempPictureData};
 
-        console.log(dataToUpdatePictureWall);
-
-        store.dispatch(addPictureToWall(dataToUpdatePictureWall));
-        store.getState();
+        dispatch(addPictureToWall(dataToUpdatePictureWall));
     };
 
     return (
