@@ -40,13 +40,15 @@ const ModalSelector:React.FunctionComponent<Props> = (props:Props) => {
                 <Text style={styles.triggerBtnText}>{btnMessage}</Text>
             </TouchableOpacity>
             <Modal visible={isVisible} transparent={true} >
-                <TouchableOpacity style={{backgroundColor: 'rgba(0,0,0, 0.6)', height: '100%'}}
+                <TouchableOpacity style={{backgroundColor: 'rgba(0,0,0, 0.6)', height: '100%', width: '100%'}}
                     onPress={showHideModal}>
-                        <View style={{...styles.modalSelector, marginVertical: props.marginVertical}}>
-                            <FlatList data={props.data} renderItem={({ item }) => 
-                            (<TouchableOpacity key={item.key} onPress={() => selectItem(item.title)}>
-                                <Text style={styles.modalSelectorContent}>{item.title}</Text>
-                            </TouchableOpacity>)}/>
+                        <View style={styles.modalSelectorContainer}>
+                            <View style={styles.modalSelector}>
+                                <FlatList data={props.data} renderItem={({ item }) => 
+                                (<TouchableOpacity key={item.key} onPress={() => selectItem(item.title)}>
+                                    <Text style={styles.modalSelectorContent}>{item.title}</Text>
+                                </TouchableOpacity>)}/>
+                            </View>
                         </View>
                 </TouchableOpacity>
             </Modal>
@@ -56,21 +58,28 @@ const ModalSelector:React.FunctionComponent<Props> = (props:Props) => {
 
 const styles = StyleSheet.create({
 
-        modalSelector: {
-            alignSelf: 'center',
-            backgroundColor: 'white',
-            width: '80%'
-        },
+    modalSelectorContainer: {
+        width: '80%', 
+        height: '70%', 
+        top: '15%', 
+        left: '10%',
+        justifyContent: 'center'
+    },
 
-            modalSelectorContent:{
-                textAlign: 'center',
-                fontSize: 25,
-                padding: '2%',
-                backgroundColor: '#e0695c',
-                color: 'white',
-                borderBottomColor: 'white',
-                borderBottomWidth: 1
+            modalSelector: {
+                backgroundColor: 'white',
+                maxHeight: '70%'
             },
+
+                modalSelectorContent:{
+                    textAlign: 'center',
+                    fontSize: 25,
+                    padding: '2%',
+                    backgroundColor: '#e0695c',
+                    color: 'white',
+                    borderBottomColor: 'white',
+                    borderBottomWidth: 1
+                },
 
     triggerBtn: {
         alignSelf: 'center',

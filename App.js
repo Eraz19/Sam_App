@@ -1,18 +1,16 @@
 import React from 'react';
-import {} from 'react-native';
+import { View} from 'react-native';
 
-
-import Logo from './component/Logo';
-import SignIn from './component/SignIn';
-import PropRegistrationForm from './component/ProRegistrationForm';
-import MainPage from './component/MainPage';
-import MainPageTest from './component/MainPageTest';
-
+import MainPage from './component/HomePages/MainPage';
+import Message from './component/Message/Message';
+import ProRegistrationForm from './component/Registration/ProRegistrationForm';
 
 const App = () => {
   
   return (
-      <MainPageTest />
+    <View style={{width: '100%', height: '100%'}}>
+      <Message />
+    </View>
   );
 
 };

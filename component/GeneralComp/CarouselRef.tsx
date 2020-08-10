@@ -1,32 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, ScrollView, TouchableOpacity, Text, Image, TextInput } from 'react-native';
 
 import ImagePicker, { ImagePickerResponse } from 'react-native-image-picker';
+import {PictureData} from '../Types';
 
-interface pictureData {
-    uri:string;
-    key:number;
-    title:string;
-}
+const CarouselRef:React.FunctionComponent = () => {
 
-interface Props {
-    top?:string;
-    left?:string;
-    bottom?:string;
-    right?:string;
-}
-
-const CarouselRef:React.FunctionComponent<Props> = (props:Props) => {
-
-    const [imageList, setImageList] = useState<pictureData[]>([]);
-
-    useEffect(() => {
-
-    }, [imageList]);
+    const [imageList, setImageList] = useState<PictureData[]>([]);
 
     const ImagePickerCallBack = (data:ImagePickerResponse) => {
         
-        const tempPictureUri:pictureData = {uri: data.uri, key: Math.random(), title:''};
+        const tempPictureUri:PictureData = { uri: data.uri, 
+                                             key: Math.random().toString(), 
+                                             title:'', 
+                                             width: 0, 
+                                             height: 0};
 
         if (data.didCancel) { return; }
 
@@ -37,7 +25,7 @@ const CarouselRef:React.FunctionComponent<Props> = (props:Props) => {
         setImageList([...imageList, tempPictureUri]);
     };
 
-    const changeNameRef = (value:string, key:number) => {
+    const changeNameRef = (value:string, key:string) => {
         
         let index:number = 0;
 
@@ -46,27 +34,27 @@ const CarouselRef:React.FunctionComponent<Props> = (props:Props) => {
                 index++;
         });
 
-        const cpyImageList:pictureData[] = [...imageList];
+        const cpyImageList:PictureData[] = [...imageList];
         cpyImageList[index].title = value;
         setImageList(cpyImageList);
     };
 
     return (
-        <View style={{left: props.left, top: props.top}}>
+        <View>
             <Text style={{color: '#e0695c', left: '3%', fontSize: 17}} >Artist References</Text>
-            <View style={{...styles.carouselContainer}}>
+            <View style={styles.carouselContainer}>
                 <ScrollView horizontal={true}>
                     {imageList.map(picElem => (
                         <View key={picElem.key} style={styles.pictureContainer}>
                             <Image style={styles.carouselImages} source={{ uri : picElem.uri}}/>
                             <TextInput placeholder={'Ref Name'} style={styles.title} 
-                                    onChangeText={(newText) => changeNameRef(newText, picElem.key)}></TextInput>
+                                       onChangeText={(newText) => changeNameRef(newText, picElem.key)}></TextInput>
                         </View>
                     ))}
                 </ScrollView>
                 <TouchableOpacity style={{...styles.btnAddPicture, zIndex: 2}}
-                                onPress={() => ImagePicker.showImagePicker({}, ImagePickerCallBack)}>
-                    <Image style={{width: 50, height: 50, zIndex: 1}} source={require('../Images/addPicturePlus.png')}/>
+                                  onPress={() => ImagePicker.showImagePicker({}, ImagePickerCallBack)}>
+                    <Image style={{width: 50, height: 50, zIndex: 1}} source={require('../../Images/addPicturePlus.png')}/>
                 </TouchableOpacity>
             </View>
         </View>

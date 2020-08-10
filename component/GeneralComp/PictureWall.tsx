@@ -1,20 +1,12 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Image, TouchableOpacity, FlatList, Modal } from 'react-native';
 import { useSelector } from 'react-redux';
-import { GlobalState } from '../Redux/Store/store';
+import { GlobalState } from '../../Redux/Store/store';
 
-import {PictureData} from './Types';
+import {PictureData} from '../Types';
 
-interface Props {
-    width:number|string;
-    height:number|string;
-    left?:number|string;
-    right?:number|string;
-    top?:number|string;
-    bottom?:number|string;
-}
 
-const PictureWall:React.FunctionComponent<Props> = (props:Props) => {
+const PictureWall:React.FunctionComponent = () => {
                                
     const defaultDataPicture:PictureData = { uri: '',
                                              key: Math.random().toString(),
@@ -37,14 +29,12 @@ const PictureWall:React.FunctionComponent<Props> = (props:Props) => {
     };
 
     return (
-        <View style={{ width: '100%', height: '100%', borderColor: 'black', borderWidth: 2}}>
+        <View style={{ width: '100%', height: '100%'}}>
 
-            <View style={{ width: props.width, height: props.height, 
-                           left: props.left ? props.left : 0, right: props.right ? props.right : 0,
-                           top: props.top ? props.top : 0, bottom: props.bottom ? props.bottom : 0,
-                           position:'absolute', borderColor: 'red', borderWidth: 2}}>
+            <View>
                 <FlatList data={pictureWall} 
                           numColumns={3}
+                          keyExtractor={item => item.image.key}
                           renderItem={({item}) => (
                             <TouchableOpacity style={{...styles.pictureContainer, flex: item.image.spaceTakenInRow}} 
                                               onPress={() => displayPicture(item.image)}>
@@ -52,7 +42,7 @@ const PictureWall:React.FunctionComponent<Props> = (props:Props) => {
                             </TouchableOpacity>)}>   
                 </FlatList>
             </View>
-
+            
             <Modal visible={isVisible} transparent={true}>
                 <TouchableOpacity style={styles.imageDisplayBackground}
                                   onPress={() => displayPicture(defaultDataPicture)}>

@@ -1,20 +1,15 @@
 import React, { } from 'react';
-import { TouchableOpacity, View, Button } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import ImagePicker, { ImagePickerResponse, ImagePickerOptions } from 'react-native-image-picker';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import store , { GlobalState } from '../Redux/Store/store';
-import { PictureData } from './Types';
-import { addPictureToWall } from '../Redux/Action/action';
-import { ActionData_AddPicture } from '../Redux/Action/actionTypes';
+import { PictureData } from '../Types';
+import { addPictureToWall } from '../../Redux/Action/pictureAction';
+import { ActionData_AddPicture } from '../../Redux/Action/actionTypes';
 
 interface Props {
     width:number|string;
     height:number|string;
-    left?:number|string;
-    right?:number|string;
-    top?:number|string;
-    bottom?:number|string;
 
     btn:Element;
 }
@@ -67,9 +62,10 @@ const PicturePicker:React.FunctionComponent<Props> = (props:Props) => {
     };
 
     return (
-        <View>
-            <Button title={'fuck you'} onPress={() => ImagePicker.showImagePicker( imagePickerOption, ImagePickerCallBack)}/>
-        </View>
+        <TouchableOpacity   onPress={() => ImagePicker.showImagePicker( imagePickerOption, ImagePickerCallBack)}
+                            style={{ width: props.width, height: props.height, position: 'absolute'}}>
+                {props.btn}
+        </TouchableOpacity>
     );
 };
 
